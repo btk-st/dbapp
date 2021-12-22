@@ -1,0 +1,50 @@
+#filter {
+    margin: 10px;
+    text-align: center;
+    background-color: darkgrey;
+}
+#filter button {
+    width: 200px;
+    height: 30px;
+    margin: 20px 20px 0px 20px;
+}
+
+
+.leftSideFilter {
+    /*float: left;*/
+    display: inline-block;
+    padding-right: 50px;
+    padding-left: 50px;
+    text-align: left;
+
+}
+.rightSideFilter {
+    /*float: left;*/
+    display: inline-block;
+    padding-right: 50px;
+    /*padding-left: 50px;*/
+    text-align: left;
+}
+.priceFilter {
+    padding-right: 50px;
+    padding-left: 50px;
+    text-align: left;
+    display: inline-block;
+}
+
+.leftSideFilter label:first-child {
+    width: 200px;
+    display: inline-block;
+}
+.rightSideFilter label:first-child {
+    width: 300px;
+    display: inline-block;
+}
+.priceFilter label:first-child {
+    width: 500px;
+    display: inline-block;
+}
+.orderCard {
+    display: inline-block;
+    padding: 30px;
+}
