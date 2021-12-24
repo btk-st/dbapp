@@ -13,7 +13,6 @@ import javax.persistence.criteria.Predicate;
 import javax.persistence.criteria.Root;
 import java.math.BigDecimal;
 import java.util.*;
-//todo bool fields not working. need to test more
 @Service
 public class OrderServiceImpl implements OrderService {
 

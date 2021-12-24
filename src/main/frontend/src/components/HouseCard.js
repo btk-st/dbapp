@@ -4,6 +4,7 @@ export default class HouseCard extends React.Component {
     constructor(props) {
         super(props);
         this.state = this.props.houseInfo;
+        console.log(this.state)
     }
 
     render() {
@@ -46,8 +47,8 @@ export default class HouseCard extends React.Component {
                 {this.state.hasSwimmingPool != null && <tr>
                     <td>{this.state.hasSwimmingPool ? 'Есть плавательный бассейн' : 'Нет плавательного бассейна'}</td>
                 </tr>}
-                {this.state.hasUndegroundParking != null && <tr>
-                    <td>{this.state.hasUndegroundParking ? 'Есть подземная парковка' : 'Нет подземной парковки'}</td>
+                {this.state.hasUndergroundParking != null && <tr>
+                    <td>{this.state.hasUndergroundParking ? 'Есть подземная парковка' : 'Нет подземной парковки'}</td>
                 </tr>}
                 {this.state.hasGarbageChute != null &&<tr>
                     <td>{this.state.hasGarbageChute ? 'Есть мусоропровод':'Нет мусоропровода'} </td>

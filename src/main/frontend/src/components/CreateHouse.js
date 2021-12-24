@@ -4,19 +4,11 @@ import '../css/CreateHouse.css'
 export default class CreateHouse extends React.Component {
     constructor(props) {
         super(props);
-        this.typicalFields = ['region', 'flatNumber', 'houseType', 'area', 'floor',
+        const fields = ['region', 'flatNumber', 'houseType', 'area', 'floor',
             'floorsCount', 'yearOfConstruction', 'comment', 'hasGarbageChute', 'kitchenArea',
-            'ceilingHeight', 'hasBalcony'];
-        this.eliteFields = ['region', 'flatNumber', 'houseType', 'area', 'floor',
-            'floorsCount', 'yearOfConstruction', 'comment', 'kitchenArea',
-            'ceilingHeight', 'hasBalcony', 'hasUndegroundParking', 'hasSwimmingPool']
-        this.cottageFields = ['region', 'houseType', 'area',
-            'floorsCount', 'yearOfConstruction', 'comment', 'kitchenArea',
-            'ceilingHeight', 'hasBalcony', 'hasUndegroundParking', 'hasSwimmingPool']
-        this.nonResidentialFields = ['region', 'houseType', 'area', 'floor',
-            'floorsCount', 'yearOfConstruction', 'comment',
-            'ceilingHeight', 'hasUndegroundParking']
-        const info = Object.fromEntries(this.typicalFields.map(field => [field, null]));
+            'hasUndergroundParking', 'hasSwimmingPool', 'ceilingHeight', 'hasBalcony', 'streetName', 'roomsCount'];
+
+        const info = Object.fromEntries(fields.map(field => [field, null]));
         this.state = {house: info, agent: null, rublePrice: null, dollarPrice: null};
         this.state.house.houseType = 'Типичный';
         this.state.house.region = 'Дзержинский'
@@ -52,17 +44,12 @@ export default class CreateHouse extends React.Component {
                 })
             }
         } else {
-            const typeMap = {
-                'Типичный': 'typical',
-                'Элитный': 'elite',
-                'Частный': 'cottage',
-                'Нежилой': 'nonResidential'
-            }
             //clear house info if type was changed
             let newInfo = this.state.house;
             if (e.target.name === "houseType") {
-                //clear inputs
-                newInfo = Object.fromEntries(this[typeMap[e.target.value] + "Fields"].map(field => [field, ""]));
+                //clear state fields
+                newInfo = Object.fromEntries(Object.keys(this.state.house).map(field => [field, ""]));
+                //clear frontend inputs
                 document.querySelectorAll('input, select').forEach(node => {
                     if (node.name !== "houseType") {
                         node.value = "";
@@ -109,7 +96,7 @@ export default class CreateHouse extends React.Component {
             <div id="createHouseCard">
                 {!this.state.agent ? <div>Сначала выберите пользователя</div> :
                     <div>
-                        <div hidden={!Object.keys(this.state.house).includes("houseType")}>
+                        <div>
                             <label>Тип дома: </label>
                             <select name="houseType" value={this.state.house.houseType} onChange={this.handleChange}>
                                 <option value="Типичный">Типичный</option>
@@ -119,7 +106,7 @@ export default class CreateHouse extends React.Component {
                             </select>
                         </div>
 
-                        <div hidden={!Object.keys(this.state.house).includes("region")}>
+                        <div >
                             <label>Район: </label>
                             <select name="region" value={this.state.house.region} onChange={this.handleChange}>
                                 <option value="Дзержинский">Дзержинский</option>
@@ -130,42 +117,52 @@ export default class CreateHouse extends React.Component {
                                 <option value="Фрунзенский">Фрунзенский</option>
                             </select>
                         </div>
-
-                        <div hidden={!Object.keys(this.state.house).includes("flatNumber")}>
+                        <div >
+                            <label>Улица: </label>
+                            <input type="input" name="streetName" value={this.state.house.streetName}
+                                   onChange={this.handleChange}/>
+                        </div>
+                        <div >
+                            <label>Число комнат: </label>
+                            <input type="number" name="roomsCount" value={this.state.house.roomsCount}
+                                   onChange={this.handleChange}/>
+                        </div>
+                        <div >
                             <label>Номер квартиры: </label>
                             <input type="number" name="flatNumber" value={this.state.house.flatNumber}
                                    onChange={this.handleChange}/>
                         </div>
-                        <div hidden={!Object.keys(this.state.house).includes("area")}>
+                        <div >
                             <label>Площадь: </label>
                             <input type="number" name="area" value={this.state.house.area}
                                    onChange={this.handleChange}/>
                         </div>
-                        <div hidden={!Object.keys(this.state.house).includes("kitchenArea")}>
+                        <div >
                             <label>Площадь кухни: </label>
                             <input type="number" name="kitchenArea" value={this.state.house.kitchenArea}
                                    onChange={this.handleChange}/>
                         </div>
-                        <div hidden={!Object.keys(this.state.house).includes("floor")}>
+                        <div >
+                            <label>Высота потолков: </label>
+                            <input type="number" name="ceilingHeight" value={this.state.house.ceilingHeight}
+                                   onChange={this.handleChange}/>
+                        </div>
+                        <div >
                             <label>Этаж: </label>
                             <input type="number" name="floor" value={this.state.house.floor}
                                    onChange={this.handleChange}/>
                         </div>
-                        <div hidden={!Object.keys(this.state.house).includes("floorsCount")}>
+                        <div >
                             <label>Число этажей: </label>
                             <input type="number" name="floorsCount" value={this.state.house.floorsCount}
                                    onChange={this.handleChange}/>
                         </div>
-                        <div hidden={!Object.keys(this.state.house).includes("yearOfConstruction")}>
+                        <div >
                             <label>Год постройки: </label>
                             <input type="number" name="yearOfConstruction" value={this.state.house.yearOfConstruction}
                                    onChange={this.handleChange}/>
                         </div>
-                        <div hidden={!Object.keys(this.state.house).includes("comment")}>
-                            <label>Комментарий: </label>
-                            <input name="comment" value={this.state.house.comment} onChange={this.handleChange}/>
-                        </div>
-                        <div hidden={!Object.keys(this.state.house).includes("hasGarbageChute")}>
+                        <div >
                             <label>Есть мусоропровод? </label>
                             <select name="hasGarbageChute" value={this.state.house.hasGarbageChute}
                                     onChange={this.handleChange}>
@@ -174,7 +171,7 @@ export default class CreateHouse extends React.Component {
                                 <option value="true">Да</option>
                             </select>
                         </div>
-                        <div hidden={!Object.keys(this.state.house).includes("hasSwimmingPool")}>
+                        <div >
                             <label>Есть бассейн? </label>
                             <select name="hasSwimmingPool" value={this.state.house.hasSwimmingPool}
                                     onChange={this.handleChange}>
@@ -183,14 +180,27 @@ export default class CreateHouse extends React.Component {
                                 <option value="true">Да</option>
                             </select>
                         </div>
-                        <div hidden={!Object.keys(this.state.house).includes("hasUndegroundParking")}>
+                        <div >
                             <label>Есть подземная парковка? </label>
-                            <select name="hasUndegroundParking" value={this.state.house.hasUndegroundParking}
+                            <select name="hasUndergroundParking" value={this.state.house.hasUndergroundParking}
                                     onChange={this.handleChange}>
                                 <option value="">Не указано</option>
                                 <option value="false">Нет</option>
                                 <option value="true">Да</option>
                             </select>
+                        </div>
+                        <div >
+                            <label>Есть балкон? </label>
+                            <select name="hasBalcony" value={this.state.house.hasBalcony}
+                                    onChange={this.handleChange}>
+                                <option value="">Не указано</option>
+                                <option value="false">Нет</option>
+                                <option value="true">Да</option>
+                            </select>
+                        </div>
+                        <div >
+                            <label>Комментарий: </label>
+                            <input name="comment" value={this.state.house.comment} onChange={this.handleChange}/>
                         </div>
 
 
