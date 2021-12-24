@@ -16,8 +16,14 @@ export default class HouseCard extends React.Component {
                 <tr>
                     <td>Район: {this.state.region}</td>
                 </tr>
+                {this.state.streetName != null && <tr>
+                    <td>Улица: {this.state.streetName}</td>
+                </tr>}
                 {this.state.flatNumber != null && <tr>
                     <td>Номер квартиры: {this.state.flatNumber}</td>
+                </tr>}
+                {this.state.roomsCount != null && <tr>
+                    <td>Число комнат: {this.state.roomsCount}</td>
                 </tr>}
                 {this.state.area != null && <tr>
                     <td>Площадь: {this.state.area} кв.м</td>

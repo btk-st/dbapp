@@ -9,7 +9,7 @@ export default class AvailableOrders extends React.Component {
         const filterFields = ['houseType', 'region', 'areaFrom', 'areaTo', 'kitchenAreaFrom', 'kitchenAreaTo', 'floorFrom',
         'floorTo', 'yearOfConstructionFrom', 'yearOfConstructionTo','ceilingHeightFrom', 'ceilingHeightTo', 'rublePriceFrom',
         'rublePriceTo', 'dollarPriceFrom', 'dollarPriceTo', 'hasGarbageChute', 'hasUndergroundParking', 'hasSwimmingPool',
-            'hasBalcony', 'comment']
+            'hasBalcony', 'comment', 'roomsCountTo', 'roomsCountFrom', 'streetName']
         axios.get('http://localhost:8080/api/const?constName=dollar_rate')
             .then(res => this.state.dollarRate = res.data);
         this.state = {orders: [], filterFields:Object.fromEntries(filterFields.map(field => [field, null]))}
@@ -161,6 +161,16 @@ export default class AvailableOrders extends React.Component {
                                 </div>
                             </div>
                             <div className="rightSideFilter">
+                                <div>
+                                    <label>Число комнат от: </label>
+                                    <input type="number" name="roomsCountFrom" value={this.state.filterFields.roomsCountFrom} onChange={this.handleFilterChange} />
+                                    <label> до </label>
+                                    <input type="number" name="roomsCountTo" value={this.state.filterFields.roomsCountTo} onChange={this.handleFilterChange} />
+                                </div>
+                                <div>
+                                    <label>Улица: </label>
+                                    <input name="streetName" value={this.state.filterFields.streetName} onChange={this.handleFilterChange} />
+                                </div>
                                 <div>
                                     <label>Есть мусоропровод?  </label>
                                     <select name="hasGarbageChute" value={this.state.filterFields.hasGarbageChoute} onChange={this.handleFilterChange}>

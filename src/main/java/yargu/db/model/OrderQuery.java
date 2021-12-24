@@ -15,12 +15,13 @@ public class OrderQuery {
     private Integer yearOfConstructionTo;
     private Integer ceilingHeightFrom;
     private Integer ceilingHeightTo;
+    private Integer roomsCountFrom;
+    private Integer roomsCountTo;
 
     private BigDecimal rublePriceFrom;
     private BigDecimal rublePriceTo;
     private BigDecimal dollarPriceFrom;
     private BigDecimal dollarPriceTo;
-
 
     private Boolean hasGarbageChute;
     private Boolean hasUndergroundParking;
@@ -28,7 +29,32 @@ public class OrderQuery {
     private Boolean hasBalcony;
 
     private String  comment;
+    private String streetName;
 
+
+    public Integer getRoomsCountFrom() {
+        return roomsCountFrom;
+    }
+
+    public void setRoomsCountFrom(Integer roomsCountFrom) {
+        this.roomsCountFrom = roomsCountFrom;
+    }
+
+    public Integer getRoomsCountTo() {
+        return roomsCountTo;
+    }
+
+    public void setRoomsCountTo(Integer roomsCountTo) {
+        this.roomsCountTo = roomsCountTo;
+    }
+
+    public String getStreetName() {
+        return streetName;
+    }
+
+    public void setStreetName(String streetName) {
+        this.streetName = streetName;
+    }
 
     public HouseType getHouseType() {
         return houseType;

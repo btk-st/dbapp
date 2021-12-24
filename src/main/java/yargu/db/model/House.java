@@ -55,6 +55,12 @@ public class House {
     @Column(name = "has_balcony")
     private Boolean hasBalcony;
 
+    @Column(name = "street_name")
+    private String streetName;
+
+    @Column(name = "rooms_count")
+    private Integer roomsCount;
+
     public Integer getId() {
         return id;
     }
@@ -127,7 +133,7 @@ public class House {
         this.comment = comment;
     }
 
-    public Boolean isHasGarbageChute() {
+    public Boolean getHasGarbageChute() {
         return hasGarbageChute;
     }
 
@@ -139,11 +145,11 @@ public class House {
         return kitchenArea;
     }
 
-    public void setKitchenArea(Integer kitchen_area) {
-        this.kitchenArea = kitchen_area;
+    public void setKitchenArea(Integer kitchenArea) {
+        this.kitchenArea = kitchenArea;
     }
 
-    public Boolean isHasUndergroundParking() {
+    public Boolean getHasUndergroundParking() {
         return hasUndergroundParking;
     }
 
@@ -151,7 +157,7 @@ public class House {
         this.hasUndergroundParking = hasUndergroundParking;
     }
 
-    public Boolean isHasSwimmingPool() {
+    public Boolean getHasSwimmingPool() {
         return hasSwimmingPool;
     }
 
@@ -167,11 +173,27 @@ public class House {
         this.ceilingHeight = ceilingHeight;
     }
 
-    public Boolean isHasBalcony() {
+    public Boolean getHasBalcony() {
         return hasBalcony;
     }
 
     public void setHasBalcony(Boolean hasBalcony) {
         this.hasBalcony = hasBalcony;
+    }
+
+    public String getStreetName() {
+        return streetName;
+    }
+
+    public void setStreetName(String streetName) {
+        this.streetName = streetName;
+    }
+
+    public Integer getRoomsCount() {
+        return roomsCount;
+    }
+
+    public void setRoomsCount(Integer roomsCount) {
+        this.roomsCount = roomsCount;
     }
 }
