@@ -32,6 +32,18 @@ public class Order {
     @Column(name = "dollar_profit")
     private BigDecimal dollarProfit;
 
+    @Enumerated(EnumType.STRING)
+    @Column(name = "order_type")
+    private OrderType orderType;
+
+    public OrderType getOrderType() {
+        return orderType;
+    }
+
+    public void setOrderType(OrderType orderType) {
+        this.orderType = orderType;
+    }
+
     public BigDecimal getDollarProfit() {
         return dollarProfit;
     }

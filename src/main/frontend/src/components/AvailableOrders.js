@@ -9,7 +9,7 @@ export default class AvailableOrders extends React.Component {
         const filterFields = ['houseType', 'region', 'areaFrom', 'areaTo', 'kitchenAreaFrom', 'kitchenAreaTo', 'floorFrom',
         'floorTo', 'yearOfConstructionFrom', 'yearOfConstructionTo','ceilingHeightFrom', 'ceilingHeightTo', 'rublePriceFrom',
         'rublePriceTo', 'dollarPriceFrom', 'dollarPriceTo', 'hasGarbageChute', 'hasUndergroundParking', 'hasSwimmingPool',
-            'hasBalcony', 'comment', 'roomsCountTo', 'roomsCountFrom', 'streetName']
+            'hasBalcony', 'comment', 'roomsCountTo', 'roomsCountFrom', 'streetName', 'orderType']
         axios.get('http://localhost:8080/api/const?constName=dollar_rate')
             .then(res => this.state.dollarRate = res.data);
         this.state = {orders: [], filterFields:Object.fromEntries(filterFields.map(field => [field, null]))}
@@ -106,7 +106,16 @@ export default class AvailableOrders extends React.Component {
                     <hr/>
                     <div>
                         <div>
+
                             <div className="leftSideFilter">
+                                <div>
+                                    <label>Тип сделки: </label>
+                                    <select name="orderType" value={this.state.filterFields.orderType} onChange={this.handleFilterChange}>
+                                        <option value="">Любой</option>
+                                        <option value="Продажа">Продажа</option>
+                                        <option value="Аренда">Аренда</option>
+                                    </select>
+                                </div>
                                 <div>
                                     <label>Тип дома:  </label>
                                     <select name="houseType" value={this.state.filterFields.houseType} onChange={this.handleFilterChange}>
@@ -154,7 +163,7 @@ export default class AvailableOrders extends React.Component {
                                     <input type="number" name="yearOfConstructionTo" value={this.state.filterFields.yearOfConstructionTo} onChange={this.handleFilterChange} />
                                 </div>
                                 <div>
-                                    <label>Высота потолков от: </label>
+                                    <label>Высота потолков, см от: </label>
                                     <input type="number" name="ceilingHeightFrom" value={this.state.filterFields.ceilingHeightFrom} onChange={this.handleFilterChange} />
                                     <label> до </label>
                                     <input type="number" name="ceilingHeightTo" value={this.state.filterFields.ceilingHeightTo} onChange={this.handleFilterChange} />
@@ -242,6 +251,9 @@ export default class AvailableOrders extends React.Component {
                 {this.state.orders.map(order => {
                     return <div className="orderCard">
                         <HouseCard houseInfo={order.house}/>
+                        <div>
+                            {order.orderType}
+                        </div>
                         <div>
                             Цена в долларах: {order.dollarPrice.toLocaleString()}
                         </div>

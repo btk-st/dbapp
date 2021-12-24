@@ -3,6 +3,7 @@ package yargu.db.model;
 import java.math.BigDecimal;
 
 public class OrderQuery {
+    private OrderType orderType;
     private HouseType houseType;
     private Region  region;
     private Integer areaFrom;
@@ -31,6 +32,13 @@ public class OrderQuery {
     private String  comment;
     private String streetName;
 
+    public OrderType getOrderType() {
+        return orderType;
+    }
+
+    public void setOrderType(OrderType orderType) {
+        this.orderType = orderType;
+    }
 
     public Integer getRoomsCountFrom() {
         return roomsCountFrom;

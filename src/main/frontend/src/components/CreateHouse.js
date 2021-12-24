@@ -9,7 +9,7 @@ export default class CreateHouse extends React.Component {
             'hasUndergroundParking', 'hasSwimmingPool', 'ceilingHeight', 'hasBalcony', 'streetName', 'roomsCount'];
 
         const info = Object.fromEntries(fields.map(field => [field, null]));
-        this.state = {house: info, agent: null, rublePrice: null, dollarPrice: null};
+        this.state = {house: info, agent: null, rublePrice: null, dollarPrice: null, orderType: 'Продажа'};
         this.state.house.houseType = 'Типичный';
         this.state.house.region = 'Дзержинский'
         //get dollar rate
@@ -29,36 +29,29 @@ export default class CreateHouse extends React.Component {
 
     handleChange(e) {
         console.log(this.state)
-        if (e.target.name === "rublePrice" || e.target.name === "dollarPrice") {
-            if (e.target.name === "rublePrice") {
-                const newRublePrice = Math.floor(e.target.value * 100) / 100;
-                this.setState({
-                    rublePrice: newRublePrice,
-                    dollarPrice: Math.floor(newRublePrice / this.state.dollarRate * 100) / 100
-                })
-            } else {
-                const newDollarPrice = Math.floor(e.target.value * 100) / 100;
-                this.setState({
-                    dollarPrice: Math.floor(e.target.value * 100) / 100,
-                    rublePrice: Math.floor(newDollarPrice * this.state.dollarRate * 100) / 100
-                })
+        //order info was changed
+        if (["orderType", "rublePrice", "dollarPrice"].includes(e.target.name)) {
+            if (e.target.name === "orderType") {
+                this.setState({orderType:e.target.value});
+            }
+            if (e.target.name === "rublePrice" || e.target.name === "dollarPrice") {
+                if (e.target.name === "rublePrice") {
+                    const newRublePrice = Math.floor(e.target.value * 100) / 100;
+                    this.setState({
+                        rublePrice: newRublePrice,
+                        dollarPrice: Math.floor(newRublePrice / this.state.dollarRate * 100) / 100
+                    })
+                } else {
+                    const newDollarPrice = Math.floor(e.target.value * 100) / 100;
+                    this.setState({
+                        dollarPrice: Math.floor(e.target.value * 100) / 100,
+                        rublePrice: Math.floor(newDollarPrice * this.state.dollarRate * 100) / 100
+                    })
+                }
             }
         } else {
-            //clear house info if type was changed
-            let newInfo = this.state.house;
-            if (e.target.name === "houseType") {
-                //clear state fields
-                newInfo = Object.fromEntries(Object.keys(this.state.house).map(field => [field, ""]));
-                //clear frontend inputs
-                document.querySelectorAll('input, select').forEach(node => {
-                    if (node.name !== "houseType") {
-                        node.value = "";
-                    }
-                })
-                newInfo.houseType = e.target.value;
-                newInfo.region = 'Дзержинский'
-            }
-            //change info
+            //house info was changed
+            const newInfo = this.state.house;
             newInfo[e.target.name] = e.target.value;
             this.setState({house: newInfo});
         }
@@ -85,7 +78,8 @@ export default class CreateHouse extends React.Component {
                     is_sold: false,
                     dollar_price: Math.floor((this.state.dollarPrice * (1 + this.state.agencyComission / 100)) * 100) / 100,
                     ruble_price: Math.floor((this.state.rublePrice * (1 + this.state.agencyComission / 100)) * 100) / 100,
-                    dollar_profit: (Math.floor((this.state.dollarPrice * (1 + this.state.agencyComission / 100)) * 100) / 100) - this.state.dollarPrice
+                    dollar_profit: (Math.floor((this.state.dollarPrice * (1 + this.state.agencyComission / 100)) * 100) / 100) - this.state.dollarPrice,
+                    order_type: this.state.orderType
                 })
                     .then(res => alert('Успешно создано'))
             })
@@ -96,6 +90,13 @@ export default class CreateHouse extends React.Component {
             <div id="createHouseCard">
                 {!this.state.agent ? <div>Сначала выберите пользователя</div> :
                     <div>
+                        <div>
+                            <label>Тип сделки: </label>
+                            <select name="orderType" value={this.state.orderType} onChange={this.handleChange}>
+                                <option value="Продажа">Продажа</option>
+                                <option value="Аренда">Аренда</option>
+                            </select>
+                        </div>
                         <div>
                             <label>Тип дома: </label>
                             <select name="houseType" value={this.state.house.houseType} onChange={this.handleChange}>
@@ -143,7 +144,7 @@ export default class CreateHouse extends React.Component {
                                    onChange={this.handleChange}/>
                         </div>
                         <div >
-                            <label>Высота потолков: </label>
+                            <label>Высота потолков, см: </label>
                             <input type="number" name="ceilingHeight" value={this.state.house.ceilingHeight}
                                    onChange={this.handleChange}/>
                         </div>

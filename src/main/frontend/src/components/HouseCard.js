@@ -10,7 +10,7 @@ export default class HouseCard extends React.Component {
     render() {
         return <div id="houseCard">
             <table  border="1" width={300}>
-                <caption>Дом №{this.state.id}</caption>
+                <caption>Дом №{this.state.id}.</caption>
                 <tr>
                     <td>Тип дома: {this.state.houseType}</td>
                 </tr>
@@ -33,7 +33,7 @@ export default class HouseCard extends React.Component {
                     <td>Площадь кухни: {this.state.kitchenArea} кв.м</td>
                 </tr>}
                 {this.state.ceilingHeight != null && <tr>
-                    <td>Высота потолков: {this.state.ceilingHeight} м.</td>
+                    <td>Высота потолков, см: {this.state.ceilingHeight} м.</td>
                 </tr>}
                 {this.state.floor != null && <tr>
                     <td>Этаж: {this.state.floor}</td>

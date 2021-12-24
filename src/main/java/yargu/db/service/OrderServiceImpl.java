@@ -4,6 +4,7 @@ import org.springframework.beans.factory.annotation.Autowired;
 import org.springframework.stereotype.Service;
 import yargu.db.model.Order;
 import yargu.db.model.OrderQuery;
+import yargu.db.model.OrderType;
 import yargu.db.repository.OrderRepository;
 
 import javax.persistence.EntityManager;
@@ -27,13 +28,14 @@ public class OrderServiceImpl implements OrderService {
     private AgentService agentService;
 
     @Override
-    public Integer create(Integer houseId, Integer salesAgent, BigDecimal rublePrice, BigDecimal dollarPrice, Boolean isSold, BigDecimal dollarProfit) {
+    public Integer create(OrderType orderType, Integer houseId, Integer salesAgent, BigDecimal rublePrice, BigDecimal dollarPrice, Boolean isSold, BigDecimal dollarProfit) {
         Order order = new Order();
         order.setHouse(houseService.findById(houseId));
         order.setDollarPrice(dollarPrice);
         order.setRublePrice(rublePrice);
         order.setDollarProfit(dollarProfit);
         order.setSalesAgent(agentService.findById(salesAgent));
+        order.setOrderType(orderType);
         return orderRepository.save(order).getOrderId();
     }
 
@@ -50,6 +52,8 @@ public class OrderServiceImpl implements OrderService {
 
         // construct filter
         List<Predicate> predicateList = new ArrayList<>(Collections.emptyList());
+        //order type
+        if (orderQuery.getOrderType() != null) predicateList.add(criteriaBuilder.equal((itemRoot.get("orderType")), orderQuery.getOrderType()));
         //region
         if (orderQuery.getRegion() != null) predicateList.add(criteriaBuilder.equal((itemRoot.get("house").get("region")), orderQuery.getRegion()));
         //type
